@@ -2,12 +2,12 @@
 
 This project is about creating a webex bot dedicated to XDR Alerts. The goals is to use this bot to manage alerts sent by XDR. This is about sending Alerts and Manage Security Operators Selected actions.
 
-XDR alerts are supposed to be sent to a list of Security Operator. Make them know that there is a Security issue within the company, and make them able to take actions from formulars displayed in the alerts.
+XDR alerts are supposed to be sent to a list of Security Operators. Make them know that there is a Security issue within the company, and make them able to take actions from formulars displayed in the alerts.
 
 This project mixes two other projects together which are :
 
 - [Webex_Team_Chat_Bot_Python](https://github.com/pcardotatgit/Webex_Team_Chat_Bot_Python)
-- [webex_for_xdr_part-2_alert_cards_examples]()
+- [webex_for_xdr_part-2_alert_cards_examples](https://github.com/pcardotatgit/webex_for_xdr_part-2_alert_cards_examples)
 
 Actually the Webex chat bot in this project had been improved compare to the **Webex_Team_Chat_Bot_Python** project.
 
@@ -53,13 +53,13 @@ Once the code unzipped into your laptop, then Go to the code subfolder.
 
 It is still a best practice to create a python virtual environment. Thank to this you will create a dedicated package with requested modules for this application.
 
-###Create a virtual environment on Windows
+### Create a virtual environment on Windows
 
     python -m venv venv 
 
-###Create a virtual environment on Linux or Mac
+### Create a virtual environment on Linux or Mac
 
-python3 -m venv venv
+    python3 -m venv venv
 
 Depending on the python version you installed into your Mac you might have to type either 
 
@@ -75,15 +75,15 @@ or maybe
 
 And then move to the next step : Activate the virtual environment.
 
-###Activate the virtual environment on Windows
+### Activate the virtual environment on Windows
 
     venv\Scripts\activate
 
-###Activate the virtual environment on Linux or Mac
+### Activate the virtual environment on Linux or Mac
 
     source venv/bin/activate    
 
-##Step 5. Install needed python modules
+## Step 5. Install needed python modules
 
 You can install them with the following 2 commands one after the other ( Windows / Mac / Linux ):
 
@@ -165,4 +165,5 @@ Go to the next chapter in order to learn how to handle the data we select into t
 []{}
 
 Go to the previous chapter 
-[]{}
+
+[webex_for_xdr_part-2_alert_cards_examples](https://github.com/pcardotatgit/webex_for_xdr_part-2_alert_cards_examples)
