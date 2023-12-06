@@ -1,4 +1,4 @@
-# XDR ALERT WEBEX BOT
+# XDR ALERT WEBEX BOT ( Part 1 )
 
 This project is about creating a webex bot dedicated to XDR Alerts. The goals is to use this bot to manage alerts sent by XDR. This is about sending Alerts and Manage Security Operators Selected actions.
 
