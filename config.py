@@ -6,4 +6,6 @@ bearer = ""
 webhook_url = 'https://webexbot_public-fqdn.com'
 webhook_name = 'bot_WebHook'
 use_ngrok=1 # 1 = Yes we use NGROK locally. 0 = No we expose the bot to internet trhu port forwarding
-version="1.0.0"
+ngrok_token='Your ngrok token'
+web_server_listening_port="3000"
+version="1.0.1_20231209"

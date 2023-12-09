@@ -11,7 +11,7 @@ This project mixes two other projects together which are :
 
 Actually the Webex chat bot in this project had been improved compare to the **Webex_Team_Chat_Bot_Python** project.
 
-This new version of the webex bot can detect automatically if the **ngrok** tool is up and running. And if so the bot is able to automatically update the Bot Webhook with the ngrok public url. Second, this new version of the bot is able to automatically list the room IDs of the Webex users who contacted it. The goal here is to send alerts to every user the is connected to. 
+This new version of the webex bot manages for you the **ngrok** setup if you decide to use ngork to expose your bot into the INTERNET. And if so the bot is able to automatically update the Bot Webhook with the ngrok public url. Second, this new version of the bot is able to automatically list the room IDs of the Webex users who contacted it. The goal here is to send alerts to every user the is connected to. 
 
 Every connected user will receive the same alerts. Then everyone will be aware of a new alert. And Second every action or query sent by any user will be seen by every user. Thru this way the Bot acts as some kind of logging systems that collect and gather history of all alerts and Security Operator activity.
 
@@ -22,6 +22,7 @@ The main thing you will learn in this chapter is to how create and use Webex Bot
 ## Prerequisit
 
 You must have created a webex bot first. If your bot is located into your laptop then use **ngork** to make it available on the INTERNET.
+This requires you to have an ngrok account with a valid ngro authentication token. The free ngrok tier gives you that.
 
 Have a look to the instructions here for that [Create a webex bot](https://github.com/pcardotatgit/Webex_Team_Chat_Bot_Python)
 
@@ -105,6 +106,7 @@ Edit the **config.py** script and set correctly the following variables
 - webhook_url = 'https//bot_public_url' . Set the bot public URL if you don't use ngrok. If you use ngrok you can keep this empty
 - webhook_name = 'bot_WebHook'  any meaningful name for your bot
 - use_ngrok=0 # 1 = Yes we use NGROK locally. 0 = No we expose the bot to internet trhu port forwarding
+- ngrok_token = 'Your ngrok token'
 
 You are ready to run the bot
 

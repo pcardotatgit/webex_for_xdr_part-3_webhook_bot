@@ -1,6 +1,9 @@
 '''
+    version_20231109
     Python webex bot for XDR alerts
     Manages Only Sent messages into the bot room
+    Manages ngrok tunnel setup
+    Manages webex webhook creation and updates
 '''
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib.request as urllib2
@@ -90,20 +93,13 @@ def _byteify(data, ignore_dicts=False):
     return data
 
 def get_bot_room_id(BOT_ACCESS_TOKEN):
-    URL = f'https://webexapis.com/v1/rooms'
-    headers = {'Authorization': 'Bearer ' + BOT_ACCESS_TOKEN,
-               'Content-type': 'application/json;charset=utf-8'}
-    response = requests.get(URL, headers=headers)
-    #print(type(response))
-    if response.status_code == 200:
-        #print(json.dumps(response.json(),sort_keys=True,indent=4, separators=(',', ': ')))
-        #result=json.dumps(response.json())
-        result=response.json()
-        the_id=result['items'][0]['id']
-        #print('bot room id : ',green(the_id))
-    else:
-        # Oops something went wrong...  Better do something about it.
-        print(response.status_code, response.text)
+    URL = 'https://webexapis.com/v1/people/me'
+    headers = {
+        "Authorization": "Bearer "+BOT_ACCESS_TOKEN,
+        "Content-Type": "application/json"
+    }    
+    the_id=requests.get(URL, headers=headers).json().get('id')
+    print('bot room id : ',red(f'{the_id}',bold=True))
     return(the_id)
     
 def send_webex_get(url):
@@ -163,7 +159,6 @@ def delete_webhook(webhook_id):
 
     requests.request("DELETE", url, headers=headers, data=payload)
 
-
 def add_webhook():
     print("New Webhook Name: {}".format(webhook['name'].encode('utf8')))
     print("New Webhook Url: {}".format(webhook['targetUrl']))    
@@ -203,30 +198,6 @@ def update_webhook():
 
     requests.request("PUT", url, headers=headers, data=payload)
 
-
-def get_ngrok_tunnel_status():
-    '''
-        If bot is hosted on laptop then we check NGROK tunnel is up
-    '''
-    print()
-    print(yellow('Bot deployed on localhost',bold=True))
-    print()
-    try:
-        response=requests.get('http://localhost:4040/api/tunnels')
-        #print (response.status_code)
-        if response.status_code==200:
-            payload=response.content
-            json_payload=json.loads(payload)
-            url=json_payload['tunnels'][0]['public_url']
-            print (green('NGROK TUNNEL DETECTED',bold=True))
-            print()
-            return(url)
-        else:
-            print (red('- No NGROK Tunnel Detected !',bold=True))
-    except:
-        print()
-        print (red('NGROK Not Started. Start it first',bold=True))
-        sys.exit()
         
 def get_bot_status():
     url = "https://webexapis.com/v1/rooms"
@@ -250,15 +221,6 @@ def get_bot_status():
             room_choices.append(room['title']+';'+room['id'])
             index+=1
     print()       
-    '''
-    choice=input("Which Room Do you Select ? : ")
-    global Dest_Room_ID
-    Dest_Room_ID=room_choices[int(choice)]
-    print()
-    print(green(f"Selected Room Is : {Dest_Room_ID}",bold=True))
-    print()
-    Dest_Room_ID=Dest_Room_ID.split(';')[1]
-    '''
     url = "https://webexapis.com/v1/webhooks"
     response = requests.request("GET", url, headers=headers, data=payload)
     data = json_loads_byteified(response.text)
@@ -293,12 +255,6 @@ def get_bot_status():
                 #add_webhook()
                 create_webhook(webhook_name,webhook_url)
                 print("    === NEW WEBHOOK ADDED ===")
-            '''
-            # for testing : cleaning reseting webhook 
-            print("    === REMOVING WEBHOOK ===")
-            delete_webhook(webhook['id'])
-            print("    === REMOVED ===") 
-            '''
                 
         if len(data['items']) == 0:
             print("    === NO WEBHOOKS DETECTED - CREATE NEW WEBHOOK===")
@@ -311,11 +267,14 @@ def main():
     print()
     global webhook_url
     if use_ngrok:
-        print(yellow('- We use NGROK',bold=True))  
-        webhook_url=get_ngrok_tunnel_status()
-        print(cyan(f'- NGROK URL Found : {webhook_url}',bold=True))  
-        print()         
-        #webhook_url=get_tunnel()
+        print("-- Starting up NGROK Tunnel...")
+        # create the tunneling via ngrok
+        ngrok.set_auth_token(ngrok_token)
+        ngrok_tunnel = ngrok.connect(web_server_listening_port)
+        webhook_url  = ngrok_tunnel.public_url   
+        print()
+        print(cyan(f'- OK NGROK URL is : {webhook_url}',bold=True))  
+        print() 
     else:
         print(yellow('-We use don t use NGROK, but the Bot public URL is : {webhook_url} ',bold=True),blue(f' {webhook_url} ',bold=True))
         if webhook_url=="":
