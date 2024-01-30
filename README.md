@@ -24,7 +24,7 @@ The main thing you will learn in this chapter is to how create and use Webex Bot
 You must have created a webex bot first. If your bot is located into your laptop then use **ngork** to make it available on the INTERNET.
 This requires you to have an ngrok account with a valid ngro authentication token. The free ngrok tier gives you that.
 
-Have a look to the instructions here for that [Create a webex bot](https://github.com/pcardotatgit/Webex_Team_Chat_Bot_Python)
+Have a look to the instructions here for that [Create a webex bot](https://github.com/pcardotatgit/Create_a_Webex_bot_for_XDR_Alerts)
 
 ## Step 1. Create a working directory
 
